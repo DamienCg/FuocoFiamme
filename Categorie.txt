@@ -1,8 +1,0 @@
-Direttore	2500
-Chef	1800
-Cuoco	1400
-Maitre	1300
-Barista	1200
-Cameriere	1100
-Lavapiatti	800
-Stagista	400
