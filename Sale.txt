@@ -1,0 +1,3 @@
+A	Sala lato EST coperta	NNANNE94T03G224J
+B	Sala lato OVEST coperta	BNNCLD88D67A788N
+C	Sala esterna entrata	FDRLCF94R16A268U
