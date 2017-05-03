@@ -13,6 +13,8 @@ DROP FUNCTION IF EXISTS NumOrdine;
 DROP TRIGGER IF EXISTS Disposizione;
 DROP TRIGGER IF EXISTS Ordinazione;
 DROP TRIGGER IF EXISTS EliminaOccupazione;
+DROP TRIGGER IF EXISTS onlymaitre;
+DROP TRIGGER IF EXISTS onlymaitre2
 
 DROP TABLE IF EXISTS Personale;
 DROP TABLE IF EXISTS Prenotazioni;
@@ -306,6 +308,41 @@ where Occupazioni.Tavolo=new.Tavolo AND
 Occupazioni.Sala=new.Sala INTO PR;
 call Elimina_PRE(PR);
 END //
+DELIMITER ;
+
+
+/* Solo un Maitre può essere responsabile di una sala.*/
+
+DELIMITER //
+CREATE TRIGGER onlymaitre
+AFTER INSERT ON Sale
+FOR EACH ROW
+BEGIN
+IF NEW.Responsabile NOT IN(
+                     SELECT CF FROM Personale
+                     WHERE Categoria='Maitre'   
+                )
+THEN 
+DELETE FROM Sale 
+WHERE Responsabile=NEW.Responsabile;
+END IF;
+END  //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER onlymaitre2
+AFTER UPDATE ON Sale
+FOR EACH ROW
+BEGIN
+IF NEW.Responsabile NOT IN(
+                     SELECT CF FROM Personale
+                     WHERE Categoria='Maitre'   
+                )
+THEN 
+DELETE FROM Sale 
+WHERE Responsabile=NEW.Responsabile;
+END IF;
+END  //
 DELIMITER ;
 
 
